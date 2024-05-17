@@ -11,6 +11,7 @@ class BoxPlot(object):
         """
         #######################################
         # TODO Task 2.5.1: Your code goes here
+        self.name = name
         self.counter_datas = [] # will be a list of list
         #######################################
 
@@ -35,6 +36,15 @@ class BoxPlot(object):
             pyplot.boxplot(self.counter_datas, labels = labels, showmeans=True, meanline = True)
         else:
             pyplot.boxplot(self.counter_datas, showmeans=True, meanline = True)
+
+        pyplot.title(self.name)
+
+        # limitations used to constraint the plots
+        # comment if considered unnecessary
+        # if self.name == "waiting time":
+        #     pyplot.ylim(0,4000)
+        # elif self.name == "queue length":
+        #     pyplot.ylim(0,6)
 
         pyplot.show()
         #######################################
