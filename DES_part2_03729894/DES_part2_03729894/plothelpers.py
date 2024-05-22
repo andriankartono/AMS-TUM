@@ -41,10 +41,10 @@ class BoxPlot(object):
 
         # limitations used to constraint the plots
         # comment if considered unnecessary
-        # if self.name == "waiting time":
-        #     pyplot.ylim(0,4000)
-        # elif self.name == "queue length":
-        #     pyplot.ylim(0,6)
+        if self.name == "waiting time":
+            pyplot.ylim(0,4000)
+        elif self.name == "queue length":
+            pyplot.ylim(0,6)
 
         pyplot.show()
         #######################################

@@ -70,6 +70,7 @@ def task2_7_3_1(queue_lengths:list = [5]):
     # initialize simulation parameters
     simparam = SimParam()
     simparam.SIM_TIME = 100000
+    simparam.NUM_SERVERS=2
     simparam.SERVICE_RATES= [0.00075, 0.00075]
 
     # create box plot instance
@@ -102,6 +103,7 @@ def task2_7_3_2(queue_lengths:list = [5]):
     # initialize simulation parameters
     simparam = SimParam()
     simparam.SIM_TIME = 1000000
+    simparam.NUM_SERVERS=2
     simparam.SERVICE_RATES= [0.00075, 0.00075]
 
     # create box plot instance
