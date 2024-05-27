@@ -108,5 +108,5 @@ class UniformRNS(RNS):
         """
         #######################################
         # TODO Task 3.1.1: Your code goes here.
-        return self.a + self.r.random()*(self.b-self.a)
+        return self.a + (self.b-self.a)*self.r.random()
         #######################################

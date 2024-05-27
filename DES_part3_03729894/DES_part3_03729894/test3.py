@@ -38,6 +38,7 @@ class DESTest(unittest.TestCase):
             DESTest.sim.sim_param.ARRIVAL_RATES = [0.001]
             DESTest.sim.reset()
             r = DESTest.sim.do_simulation().mean_number_busy_servers
+            # print(f"expected = {1/mu* 0.001}, got = {r}")
             self.assertAlmostEqual(1 / mu * 0.001, r, delta=1 / mu * 0.001 * .2,
                                    msg="Error in RNS or CounterCollection. Should have gotten a different value for" + \
                                        " the system utilization with given rho.")
@@ -58,7 +59,7 @@ class DESTest(unittest.TestCase):
             DESTest.sim.sim_param.ARRIVAL_RATES = [lam, lam]
             DESTest.sim.sim_param.SERVICE_RATES = [0.002]
             DESTest.sim.reset()
-
+            
             r = DESTest.sim.do_simulation().mean_number_busy_servers
             self.assertAlmostEqual(r, lam / 0.002 * 2, delta=lam / 0.002 * 2 * .2,
                                    msg="Error in RNS or CounterCollection. Should have gotten a different value for" + \

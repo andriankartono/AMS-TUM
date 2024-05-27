@@ -59,7 +59,7 @@ class SysState(object):
             for i in range(self.sim.sim_param.NUM_SERVERS):
                 #######################################
                 # TODO Task 3.1.4: Modify code below.
-                self.servers[i].reset(self.sim.sim_param.SERVICE_RATES[i])
+                self.servers[i].reset(self.sim.sim_param.SERVICE_RATES[i], self.sim.sim_param.SERVERS_SEEDS[i])
                 #######################################
         else:
             #######################################
@@ -70,7 +70,7 @@ class SysState(object):
             for i in range(self.sim.sim_param.NUM_USERS):
                 #######################################
                 # TODO Task 3.1.4: Modify code below.
-                self.users[i].reset(self.sim.sim_param.ARRIVAL_RATES[i], self.sim.sim_param.USERS_SEEDS)
+                self.users[i].reset(self.sim.sim_param.ARRIVAL_RATES[i], self.sim.sim_param.USERS_SEEDS[i])
                 #######################################
         else:
             #######################################
@@ -116,7 +116,7 @@ class SysState(object):
     ######################################
 
     # TODO Task 3.1.4: Correct function declaration according to task description.
-    def create_servers(self, sim: Simulation, num_servers: int, service_rates: list, seed: int):
+    def create_servers(self, sim: Simulation, num_servers: int, service_rates: list, seed: list):
         """
         Create servers objects with appropriate parameters.
         :param sim: simulation object
@@ -129,7 +129,7 @@ class SysState(object):
         # initialize list of servers
         #######################################
         # TODO Task 3.1.4: Modify code below.
-        return [Server(sim, service_rates[i], seed) for i in range(num_servers)]
+        return [Server(sim, service_rates[i], seed[i]) for i in range(num_servers)]
         #######################################
 
     # TODO Task 3.1.4: Correct function declaration according to task description.
@@ -146,7 +146,7 @@ class SysState(object):
         # initialize list of users
         #######################################
         # TODO Task 3.1.4: Modify code below.
-        return [User(sim, arrival_rates[i], seed) for i in range(num_users)]
+        return [User(sim, arrival_rates[i], seed[i]) for i in range(num_users)]
         #######################################
 
     def start_users(self):

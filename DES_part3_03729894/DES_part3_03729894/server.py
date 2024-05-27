@@ -15,7 +15,7 @@ class Server(object):
     """
 
     # TODO Task 3.1.2: Correct function declaration according to task description.
-    def __init__(self, sim: Simulation, service_rate: float, seed : int):
+    def __init__(self, sim: Simulation, service_rate: float, seed = None):
         """
         Create a server object
         :param service_rate: parameter for the service rate - how many packets are served in millisecond
@@ -38,7 +38,7 @@ class Server(object):
         #######################################
 
     # TODO Task 3.1.2: Correct function declaration according to task description.
-    def reset(self, service_rate: float, seed: int):
+    def reset(self, service_rate: float, seed = None):
         """
         reset Server object
         :param service_rate: parameter for the service rate - how many packets are served in millisecond
