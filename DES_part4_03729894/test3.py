@@ -4,6 +4,7 @@ from rns import UniformRNS
 import numpy as np
 from statisticstest import ChiSquare, TestDist
 from simparam import ARR_PROCESS
+from matplotlib import pyplot
 
 class DESTest(unittest.TestCase):
     """
@@ -38,7 +39,6 @@ class DESTest(unittest.TestCase):
             DESTest.sim.sim_param.ARRIVAL_RATES = [0.001]
             DESTest.sim.reset()
             r = DESTest.sim.do_simulation().mean_number_busy_servers
-            # print(f"expected = {1/mu* 0.001}, got = {r}")
             self.assertAlmostEqual(1 / mu * 0.001, r, delta=1 / mu * 0.001 * .2,
                                    msg="Error in RNS or CounterCollection. Should have gotten a different value for" + \
                                        " the system utilization with given rho.")
@@ -53,13 +53,13 @@ class DESTest(unittest.TestCase):
         DESTest.sim.sim_param.USERS_SEEDS = [0, 1]
         DESTest.sim.sim_param.NUM_USERS = 2
         DESTest.sim.sim_param.NUM_SERVERS = 1
-        DESTest.sim.sim_param.USERS_ARRIVAL_PROCESS = ARR_PROCESS.UNIFORM
+        DESTest.sim.sim_param.USERS_ARRIVAL_PROCESS = ARR_PROCESS.EXPONENTIAL
 
         for lam in [0.001 * 0.002, 0.2 * 0.002, 0.4 * 0.002, 0.45 * 0.002]:  # 0.001/0.01,
             DESTest.sim.sim_param.ARRIVAL_RATES = [lam, lam]
             DESTest.sim.sim_param.SERVICE_RATES = [0.002]
             DESTest.sim.reset()
-            
+
             r = DESTest.sim.do_simulation().mean_number_busy_servers
             self.assertAlmostEqual(r, lam / 0.002 * 2, delta=lam / 0.002 * 2 * .2,
                                    msg="Error in RNS or CounterCollection. Should have gotten a different value for" + \
@@ -110,6 +110,7 @@ class DESTest(unittest.TestCase):
         [c1, c2] = cs.test_distribution(alpha, 5, var=1)
 
         self.assertGreater(c1, c2, msg="Error in Chi Square Test. Hypothesis should be rejected.")
+
     def test_chi_square_exp(self):
         """
         This task is used to verify the implementation of the chi square test.
@@ -130,10 +131,10 @@ class DESTest(unittest.TestCase):
 
         [c1, c2] = cs.test_distribution(alpha, 50, est_parameters=1)
 
+
         self.assertGreater(c2, c1, msg="Error in Chi Square Test. Hypothesis should not be rejected.")
 
         emp_n, emp_x = np.histogram(values2, bins=30, range=(0, 5000))
-
 
         cs = ChiSquare(emp_n=emp_n, emp_x=emp_x, distr=TestDist.EXPONENTIAL)
 

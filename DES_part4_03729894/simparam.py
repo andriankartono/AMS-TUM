@@ -35,7 +35,7 @@ class SimParam(object):
     USERS_SEEDS: list = field(default_factory=lambda: [None])
     SERVERS_SEEDS: list = field(default_factory=lambda: [None])
 
-    USERS_ARRIVAL_PROCESS = ARR_PROCESS.UNIFORM
+    USERS_ARRIVAL_PROCESS = ARR_PROCESS.EXPONENTIAL
 
 
 
