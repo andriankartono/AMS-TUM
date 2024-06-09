@@ -231,7 +231,7 @@ class TimeIndependentCrosscorrelationCounter(TimeIndependentCounter):
         #######################################
         # TODO Task 4.1.1: Your code goes here
         # ddof is N-1 with N assumed to be the number of servers. In simulation study of task 4 -> ddof = 1
-        result = float(self.get_cov() / numpy.sqrt(numpy.var(self.values_x,ddof=len(self.values_x-1))*numpy.var(self.values_y,ddof=len(self.values_x-1))))
+        result = float(self.get_cov() / numpy.sqrt(numpy.var(self.values_x,ddof=1)*numpy.var(self.values_y,ddof=1)))
         return result
         #######################################
 
@@ -257,6 +257,7 @@ class TimeIndependentAutocorrelationCounter(TimeIndependentCounter):
         #######################################
         # TODO Task 4.1.2: Your code goes here
         self.max_lag = max_lag
+        self.reset()
         #######################################
 
     def get_auto_cov(self, lag):
@@ -269,7 +270,7 @@ class TimeIndependentAutocorrelationCounter(TimeIndependentCounter):
         if lag <= self.max_lag:
             values_lag = numpy.roll(self.values, lag)
             mul_result = numpy.multiply(self.values, values_lag)
-            result = float(numpy.mean(mul_result)- numpy.mean(self.values)*numpy.mean(values_lag))
+            result = float(numpy.mean(mul_result) - numpy.mean(self.values)*numpy.mean(values_lag))
             return result
         else:
             raise ValueError("lag is larger than max_lag")
@@ -283,7 +284,7 @@ class TimeIndependentAutocorrelationCounter(TimeIndependentCounter):
         #######################################
         # TODO Task 4.1.2: Your code goes here
         values_lag = numpy.roll(self.values, lag)
-        result = float(self.get_auto_cov(lag) / numpy.sqrt(numpy.var(self.values,ddof=len(self.values)-1)*numpy.var(values_lag,ddof=len(values_lag-1))))
+        result = float(self.get_auto_cov(lag) / numpy.sqrt(numpy.var(self.values,ddof=1)*numpy.var(values_lag,ddof=1)))
         return result
         #######################################
 
@@ -294,6 +295,7 @@ class TimeIndependentAutocorrelationCounter(TimeIndependentCounter):
         #######################################
         # TODO Task 4.1.2: Your code goes here
         self.max_lag = max_lag
+        self.reset()
         #######################################
 
     def report(self):

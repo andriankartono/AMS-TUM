@@ -128,6 +128,8 @@ class Heatmap(object):
         """
         #######################################
         # TODO Task 4.1.3: Your code goes here
+        self.corr_dict[par1][par2] = value
+        self.corr_dict[par2][par1] = value
         #######################################
 
     def plot(self):
@@ -137,4 +139,28 @@ class Heatmap(object):
         """
         #######################################
         # TODO Task 4.1.3: Your code goes here
+        
+        # first index is the row
+        # second index is the column
+        
+        # extract array 
+        keys = list(self.corr_dict.keys())
+        size = len(keys)
+        numpy_array = np.zeros(size,size)
+
+        for i in range(size):
+            for j in range(size):
+                try:
+                    numpy_array[i,j] = self.corr_dict[keys(i)][keys(j)]
+                except KeyError:
+                    numpy_array[i,j] = None
+
+        print(numpy_array)
+        heatmap = pyplot.imshow(numpy_array, cmap="inferno", vmin=-1, vmax=1)
+        pyplot.colorbar()
+
+        # create text annotations
+        for i in range(size):
+            for j in range(size):
+                pyplot.text(j, i, numpy_array[i, j], ha="center", va="center", color="w")
         #######################################
