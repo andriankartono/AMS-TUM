@@ -55,17 +55,48 @@ class Simulation(object):
         self.statistics_collection.gather_results()
         return self.statistics_collection
 
-    def do_simulation_n_limit(self, n):
+
+    # TODO Task 5.2.2: Modify the function below according to the task description
+    # (change declaration if required, e.g., add a flag indicating that the simulation starts from scratch)
+    def do_simulation_n_limit(self, n: int):
         """
         Call this function, if the simulation should stop after a given number of packets
         Do one simulation run. Initialize simulation and create first event.
         After that, one after another event is processed.
         :param n: number of customers, that are processed before the simulation stops
+        :param new_run: flag indicating that the simulation starts from the very beginning
         :return: SimResult object
         """
-        # insert first event only if no new batch has been started
         #######################################
-        # TODO Task 4.3.3: Your code goes here
+        # DONE Task 4.3.3:
+        self.sys_state.start_users()
+        cnt_served_packets = 0
+
+        # start simulation (run)
+        while not self.sys_state.stop:
+
+            e = self.event_chain.remove_oldest_event()
+            if e:
+                # if event exists and timestamps are ok, process the event
+                if self.sys_state.now <= e.timestamp:
+                    self.sys_state.now = e.timestamp
+                    self.statistics_collection.count_queue_and_servers(self.sys_state.now)
+                    e.process()
+
+                    # if this event is a service completion event
+                    if e.order == 0:
+                        cnt_served_packets += 1
+                        if cnt_served_packets > n:
+                            self.sys_state.stop = True
+                else:
+                    print("NOW: " + str(self.sys_state.now) + ", EVENT TIMESTAMP: " + str(e.timestamp))
+                    raise RuntimeError("ERROR: TIMESTAMP OF EVENT IS SMALLER THAN CURRENT TIME.")
+
+            else:
+                print("Event chain is empty. Abort")
+                self.sys_state.stop = True
+        self.statistics_collection.gather_results()
+        return self.statistics_collection
         #######################################
 
 
